@@ -1,7 +1,7 @@
 function gadget:GetInfo()
 return {
   name      = "Change Team",
-  desc      = "change team",
+  desc      = "change team periodically",
   author    = "SirMaverick",
   date      = "2011",
   license   = "GNU GPL, v2 or later",
@@ -63,9 +63,6 @@ end
 
 function gadget:Initialize()
 
-  --Spring.Echo("hello world!")
-  --Spring.Echo(#Spring.GetPlayerList(true))
-
 end
 
 function gadget:GameFrame(n)
@@ -75,13 +72,15 @@ function gadget:GameFrame(n)
     local players = GetAlivePlayers()
     local teams = GetAliveTeams()
     local newteams = ShuffleSequence(teams)
-    --Spring.Echo(#teams)
+
     for i=1,#players do
+
       local p = players[i]
       local teamold = select(4,Spring.GetPlayerInfo(p))
       local teamnew = newteams[teamold]
-      Spring.Echo(i, players[i], teamold, teamnew)
-			Spring.ChangeTeam(p, teamnew)
+
+      Spring.ChangeTeam(p, teamnew)
+
     end
 
   end
