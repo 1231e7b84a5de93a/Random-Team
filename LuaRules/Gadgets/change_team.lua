@@ -12,6 +12,8 @@ end
 
 if (gadgetHandler:IsSyncedCode()) then
 
+local teamchangetime = Spring.GetModOption("teamchangetime", false, 15)
+
 function GetAlivePlayers()
 
   local alive = {}
@@ -67,7 +69,7 @@ end
 
 function gadget:GameFrame(n)
 
-  if n%(15*30) == 0 then
+  if n%(teamchangetime*30) == 0 then
 
     local players = GetAlivePlayers()
     local teams = GetAliveTeams()
@@ -79,7 +81,9 @@ function gadget:GameFrame(n)
       local teamold = select(4,Spring.GetPlayerInfo(p))
       local teamnew = newteams[teamold]
 
-      Spring.ChangeTeam(p, teamnew)
+      if Spring.ChangeTeam then
+        Spring.ChangeTeam(p, teamnew)
+      end
 
     end
 
